@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spacy Fruit Zone | Donde la dulzura se atreve a ser picante</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Space+Mono:wght@400;700&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<!-- Aplica el tema guardado ANTES de pintar la página, para que no "parpadee" -->
+<script>
+  (function(){
+    var saved = localStorage.getItem('sfz-theme');
+    var theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  })();
+</script>
+</head>
+<body>
+
+<!-- ===== PATRON DE HUELLITAS (decorativo) ===== -->
+<div class="paw-field" aria-hidden="true"></div>
+
+<!-- ===== MANCHAS VERDE/CELESTE EN MOVIMIENTO (decorativo) ===== -->
+<div class="blob-field" aria-hidden="true"><span></span><span></span></div>
+
+<!-- ===== HEADER ===== -->
+<header class="site-header" id="inicio">
+  <div class="fruit-buddy fruit-buddy--sway" style="top:12%; left:2%; font-size:2.3rem; animation-delay:.2s;" aria-hidden="true">🍓</div>
+  <div class="fruit-buddy fruit-buddy--bob fruit-buddy--hide-mobile" style="top:58%; right:3%; font-size:2rem; animation-delay:1s;" aria-hidden="true">🌶️</div>
+  <nav class="navbar">
+    <div class="brand">
+      <img src="img/logo.jpg" alt="Spacy Fruit Zone" class="brand-logo">
+      <span class="brand-name">Spacy <span class="brand-dash">Fruit</span> Zone</span>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#inicio">🏠 Inicio</a></li>
+      <li><a href="#productos">🍓 Productos</a></li>
+      <li><a href="#" data-window="nosotros">🐾 Nosotros</a></li>
+      <li><a href="#" data-window="info">✨ Qué ofrecemos</a></li>
+      <li><a href="#pedido">🛒 Pedido</a></li>
+      <li><a href="#redes">📱 Redes</a></li>
+      <li><a href="#" data-window="contacto">📍 Contacto</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Cambiar a modo oscuro" title="Modo claro / oscuro">🌙</button>
+      <button class="cart-btn" id="cartToggle" aria-label="Ver pedido">
+        🛒 <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-text">
+      <p class="eyebrow">🐾 Puesto de fruta preparada</p>
+      <h1>Donde la dulzura<br>se atreve a ser<br><span class="hero-picante">picante</span></h1>
+      <p class="hero-sub">Fruta fresca cortada al momento, bañada en chamoy, tajín y limón. Elegí tu mezcla, armá tu pedido y lo mandamos directo a WhatsApp.</p>
+      <div class="hero-actions">
+        <a href="#productos" class="btn btn-primary">Ver catálogo 🌶️</a>
+        <a href="#" class="btn btn-ghost" data-window="info">✨ Qué ofrecemos</a>
+      </div>
+    </div>
+    <div class="hero-art">
+      <div class="hero-info-card" data-window="info" role="button" tabindex="0" aria-label="Conocer más sobre Spacy Fruit Zone">
+        <p class="hero-info-eyebrow">Spacy Fruit Zone</p>
+        <p class="hero-info-title">Fruta fresca, preparada a tu manera. 🍉</p>
+        <p class="hero-info-text">Combinamos sabores dulces, ácidos y picantes con sandía, mango, piña, fresa y pepino, para crear opciones deliciosas y originales.</p>
+        <ul>
+          <li>🍉 Mix de frutas</li>
+          <li>🍍 Fruta preparada (sandía, mango, piña, pepino)</li>
+          <li>🥒 Pepinos Locos</li>
+        </ul>
+        <span class="hero-info-tap">Conocer más 👉</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== PRODUCTOS ===== -->
+<main>
+<section class="productos" id="productos">
+  <div class="fruit-buddy fruit-buddy--bob" style="top:0%; left:1%; font-size:2.5rem; animation-delay:.4s;" aria-hidden="true">🍉</div>
+  <div class="fruit-buddy fruit-buddy--sway fruit-buddy--hide-mobile" style="top:6%; right:2%; font-size:2.1rem; animation-delay:1.2s;" aria-hidden="true">🥭</div>
+  <div class="fruit-buddy fruit-buddy--pulse" style="bottom:2%; right:2%; font-size:1.9rem; animation-delay:.8s;" aria-hidden="true">🍍</div>
+  <div class="section-head">
+    <p class="eyebrow">Catálogo</p>
+    <h2>Elegí y armá tu pedido</h2>
+    <p class="section-desc">Tres formas de disfrutar la fruta: en mix, preparada a tu gusto o bien picante. Tocá cualquier tarjeta para ver detalles.</p>
+  </div>
+
+  <div class="build-wrap">
+    <div class="build-card">
+      <span class="fruit-buddy fruit-buddy--drift build-decor-1" aria-hidden="true">🍍</span>
+      <span class="fruit-buddy fruit-buddy--sway build-decor-2" aria-hidden="true">🍓</span>
+      <p class="build-eyebrow">✨ A tu manera</p>
+      <h3 class="build-title">Armá tu pedido</h3>
+      <p class="build-sub">Combiná las frutas que quieras y lo agregamos directo a tu carrito.</p>
+      <div class="build-bar">
+        <span class="build-icon" aria-hidden="true">🍓</span>
+        <input
+          type="text"
+          id="buildInput"
+          class="build-input"
+          placeholder="Ej: Piña con sandía y mango"
+          aria-label="Escribí tu combinación de frutas"
+          autocomplete="off"
+        >
+        <button type="button" id="buildAdd" class="build-add" aria-label="Agregar combinación al pedido">➕</button>
+      </div>
+      <p class="build-hint">Escribí qué frutas querés combinar y tocá el botón para agregarlo a tu pedido.</p>
+    </div>
+  </div>
+
+  <div class="filters" id="filters">
+    <button class="filter-btn active" data-filter="todas">🍇 Todas</button>
+    <button class="filter-btn" data-filter="mixes">🍉 Mixes</button>
+    <button class="filter-btn" data-filter="preparada">🥭 Fruta preparada</button>
+    <button class="filter-btn" data-filter="picantes">🌶️ Picantes</button>
+  </div>
+  <p class="filters-desc" id="filtersDesc">Mostrando todo el catálogo: mixes, fruta a tu gusto y picantes bien locos.</p>
+
+  <div class="product-grid" id="productGrid">
+    <!-- Las tarjetas se generan con script.js -->
+  </div>
+</section>
+
+<!-- ===== NOSOTROS (teaser, el resto vive en la ventana) ===== -->
+<section class="nosotros-teaser" id="nosotros">
+  <div class="fruit-buddy fruit-buddy--drift fruit-buddy--hide-mobile" style="top:12%; right:4%; font-size:2rem; animation-delay:.5s;" aria-hidden="true">🍓</div>
+  <div class="nosotros-teaser-inner">
+    <div class="nosotros-teaser-badge" aria-hidden="true">🐾</div>
+    <div>
+      <p class="eyebrow">Nosotros</p>
+      <h2>Fruta del día, preparada a tu gusto</h2>
+      <p>Elegimos la fruta fresca cada mañana y la preparamos justo cuando llega tu pedido.</p>
+    </div>
+    <button class="btn btn-outline" data-window="nosotros">Conocer más 🐾</button>
+  </div>
+</section>
+
+<!-- ===== REDES SOCIALES ===== -->
+<section class="redes" id="redes">
+  <div class="fruit-buddy fruit-buddy--bob" style="top:0%; left:1%; font-size:2.1rem; animation-delay:.3s;" aria-hidden="true">🍋</div>
+  <div class="fruit-buddy fruit-buddy--sway fruit-buddy--hide-mobile" style="bottom:0%; right:2%; font-size:1.9rem; animation-delay:1s;" aria-hidden="true">🌶️</div>
+  <div class="section-head">
+    <p class="eyebrow">Seguinos</p>
+    <h2>📱 Nuestras redes sociales</h2>
+    <p class="section-desc">Enterate de promos, sabores nuevos y todo lo picante del día a día en Spacy Fruit Zone.</p>
+  </div>
+  <div class="redes-grid">
+    <a href="https://www.instagram.com/space_fruit_zone?igsi=NW5scmdrYTJkcGYz" target="_blank" rel="noopener" class="red-card red-instagram">
+      <span class="red-logo-wrap"><img src="img/logo.jpg" alt="Spacy Fruit Zone" class="red-logo"><span class="red-badge">📸</span></span>
+      <span class="red-name">Instagram</span>
+      <span class="red-tag">@space_fruit_zone</span>
+      <span class="red-desc">Fotos, historias y promos frescas todos los días.</span>
+    </a>
+    <a href="https://www.facebook.com/share/1EH8tKt1Dx/" target="_blank" rel="noopener" class="red-card red-facebook">
+      <span class="red-logo-wrap"><img src="img/logo.jpg" alt="Spacy Fruit Zone" class="red-logo"><span class="red-badge">📘</span></span>
+      <span class="red-name">Facebook</span>
+      <span class="red-tag">Spacy Fruit Zone</span>
+      <span class="red-desc">Novedades, horarios y contacto directo con nosotros.</span>
+    </a>
+    <a href="https://www.tiktok.com/@spacy_fruit_zone?_r=1&_t=ZS-99O1a1MQFev" target="_blank" rel="noopener" class="red-card red-tiktok">
+      <span class="red-logo-wrap"><img src="img/logo.jpg" alt="Spacy Fruit Zone" class="red-logo"><span class="red-badge">🎵</span></span>
+      <span class="red-name">TikTok</span>
+      <span class="red-tag">@spacy_fruit_zone</span>
+      <span class="red-desc">Videos cortos de nuestras preparaciones más picantes.</span>
+    </a>
+    <a href="https://wa.me/50360588060" target="_blank" rel="noopener" class="red-card red-whatsapp">
+      <span class="red-logo-wrap"><img src="img/logo.jpg" alt="Spacy Fruit Zone" class="red-logo"><span class="red-badge">💬</span></span>
+      <span class="red-name">WhatsApp</span>
+      <span class="red-tag">Pedidos directos</span>
+      <span class="red-desc">Hacé tu pedido directo y recibí atención al instante.</span>
+    </a>
+  </div>
+</section>
+
+<!-- ===== PEDIDO ===== -->
+<section class="pedido" id="pedido">
+  <div class="fruit-buddy fruit-buddy--pulse" style="top:0%; right:1%; font-size:2.1rem; animation-delay:.6s;" aria-hidden="true">🍉</div>
+  <div class="fruit-buddy fruit-buddy--drift fruit-buddy--hide-mobile" style="bottom:2%; left:2%; font-size:1.9rem; animation-delay:1.4s;" aria-hidden="true">🥭</div>
+  <div class="section-head">
+    <p class="eyebrow">Tu carrito</p>
+    <h2>🛒 Mi pedido</h2>
+    <p class="section-desc">Revisá las cantidades, agregá tu dirección si querés entrega a domicilio y enviá todo por WhatsApp en un toque.</p>
+  </div>
+
+  <div class="pedido-box">
+    <ul class="pedido-lista" id="pedidoLista">
+      <li class="pedido-vacio" id="pedidoVacio">Todavía no agregás productos. ¡Elegí algo del catálogo!</li>
+    </ul>
+
+    <div class="pedido-total-row">
+      <span>Total</span>
+      <span id="pedidoTotal">$0.00</span>
+    </div>
+
+    <form class="pedido-form" id="pedidoForm">
+      <label for="clienteNombre">Tu nombre</label>
+      <input type="text" id="clienteNombre" placeholder="Nombre completo" required>
+
+      <label for="clienteDireccion">Dirección o punto de referencia</label>
+      <input type="text" id="clienteDireccion" placeholder="Para entrega a domicilio (opcional si recogés)">
+
+      <label for="clienteNotas">Notas del pedido</label>
+      <textarea id="clienteNotas" placeholder="Ej: sin chamoy, extra picante..."></textarea>
+    </form>
+
+    <button class="btn btn-whatsapp" id="enviarWhatsapp">
+      📲 Enviar pedido por WhatsApp
+    </button>
+  </div>
+</section>
+</main>
+
+<!-- ===== CONTACTO / FOOTER ===== -->
+<footer class="footer" id="contacto">
+  <div class="fruit-buddy fruit-buddy--bob fruit-buddy--hide-mobile" style="top:8%; right:3%; font-size:1.7rem; animation-delay:.2s;" aria-hidden="true">🍍</div>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="brand-name small">Spacy <span class="brand-dash">Fruit</span> Zone</span>
+      <p>Donde la dulzura se atreve a ser picante 🌶️🍓</p>
+    </div>
+    <div class="footer-info">
+      <p>📍 Santo Tomás, San Salvador</p>
+      <p>🕑 Lunes a sábado, 9am – 6pm</p>
+      <p>📱 <a href="https://wa.me/50360588060" target="_blank" rel="noopener">+503 6058-8060</a></p>
+      <button class="link-btn" data-window="contacto">Más información 📍</button>
+    </div>
+  </div>
+  <p class="footer-note">© <span id="year"></span> Spacy Fruit Zone. Hecho con cariño, fruta fresca y algo de picante.</p>
+</footer>
+
+<!-- ===== MODAL PRODUCTO ===== -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-card" id="modalCard" role="dialog" aria-modal="true">
+    <button class="modal-close" id="modalClose" aria-label="Cerrar">✕</button>
+
+    <div class="modal-layout">
+      <!-- 🍓 Izquierda: imagen grande -->
+      <div class="modal-media">
+        <img class="modal-img" id="modalImg" src="" alt="">
+        <span class="modal-category" id="modalCategory"></span>
+      </div>
+
+      <!-- 🥭 Derecha: toda la información -->
+      <div class="modal-info">
+        <h3 id="modalName"></h3>
+        <p class="modal-price" id="modalPrice"></p>
+
+        <div class="modal-block" id="modalFruitsBlock">
+          <h4>🍓 Frutas que contiene</h4>
+          <div class="tag-list" id="modalFruits"></div>
+        </div>
+
+        <div class="modal-block" id="modalIngredientsBlock">
+          <h4>🌶️ Ingredientes</h4>
+          <div class="tag-list tag-list-ing" id="modalIngredients"></div>
+        </div>
+
+        <div class="modal-block">
+          <h4>📝 Descripción</h4>
+          <p class="modal-desc" id="modalDesc"></p>
+        </div>
+
+        <div class="modal-block" id="modalStepsBlock">
+          <h4>👩‍🍳 Cómo se prepara</h4>
+          <ol class="modal-steps" id="modalSteps"></ol>
+        </div>
+
+        <div class="modal-block" id="modalOptionsBlock">
+          <h4>🍬 Elegí tu opción</h4>
+          <div class="modal-flavors" id="modalFlavors"></div>
+        </div>
+
+        <button class="btn btn-primary modal-add" id="modalAdd">Agregar al pedido</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== VENTANAS DEL MENÚ (Nosotros / Qué ofrecemos / Contacto) ===== -->
+<div class="win-overlay" id="winOverlay">
+  <div class="win-card" id="winCard" role="dialog" aria-modal="true">
+    <button class="win-close" id="winClose" aria-label="Cerrar ventana">✕</button>
+    <div class="win-decor" id="winDecor" aria-hidden="true"></div>
+    <div class="win-body" id="winBody"></div>
+  </div>
+</div>
+
+<!-- ===== TOAST ===== -->
+<div class="toast" id="toast"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
