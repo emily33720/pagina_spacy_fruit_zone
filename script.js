@@ -444,6 +444,10 @@ el("enviarWhatsapp").addEventListener("click", () => {
 
   const direccion = el("clienteDireccion").value.trim();
   const notas = el("clienteNotas").value.trim();
+  const metodoPago = getMetodoPago();
+
+  const pagoInfo = buildPagoInfo(metodoPago);
+  if (pagoInfo === false) return; // faltan datos del método de pago, ya se avisó con un toast
 
   let mensaje = `Hola Spacy Fruit Zone 🐾🍓\nSoy ${nombre} y quiero hacer este pedido:\n\n`;
   let total = 0;
@@ -456,12 +460,167 @@ el("enviarWhatsapp").addEventListener("click", () => {
   });
 
   mensaje += `\nTotal: ${fmt(total)}`;
+  mensaje += `\nMétodo de pago: ${PAGO_LABELS[metodoPago]}`;
+  if (pagoInfo) mensaje += `\n${pagoInfo}`;
   if (direccion) mensaje += `\n\nDirección: ${direccion}`;
   if (notas) mensaje += `\nNotas: ${notas}`;
   mensaje += `\n\n¡Gracias! 🌶️`;
 
   const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`;
   window.open(url, "_blank");
+
+  showConfirmation();
+});
+
+// ---------- Método de pago ----------
+const PAGO_LABELS = {
+  tarjeta: "Tarjeta (crédito/débito)",
+  transferencia: "Transferencia bancaria",
+  billetera: "Billetera digital / pago instantáneo",
+  contraentrega: "Contra entrega"
+};
+
+function getMetodoPago() {
+  const checked = document.querySelector('input[name="metodoPago"]:checked');
+  return checked ? checked.value : "tarjeta";
+}
+
+// Muestra solo el bloque de datos que corresponde al método elegido
+function togglePagoDetalle() {
+  const metodo = getMetodoPago();
+  document.querySelectorAll(".pago-detalle").forEach(box => {
+    box.hidden = box.id !== `pagoDetalle-${metodo}`;
+  });
+}
+document.querySelectorAll('input[name="metodoPago"]').forEach(input => {
+  input.addEventListener("change", togglePagoDetalle);
+});
+togglePagoDetalle();
+
+// Valida y arma la línea extra con los datos del método de pago elegido.
+// Nunca pedimos número completo de tarjeta ni CVV: eso se cobra con
+// datáfono en persona, nunca por WhatsApp.
+function buildPagoInfo(metodo) {
+  if (metodo === "tarjeta") {
+    const titular = el("pagoTitular").value.trim();
+    if (!titular) {
+      showToast("Escribí el nombre del titular de la tarjeta");
+      el("pagoTitular").focus();
+      return false;
+    }
+    const tipo = el("pagoTipoTarjeta").value;
+    return `Tarjeta ${tipo} — Titular: ${titular} (se cobra con datáfono al entregar)`;
+  }
+
+  if (metodo === "transferencia") {
+    const banco = el("pagoBancoOrigen").value.trim();
+    const referencia = el("pagoReferencia").value.trim();
+    if (!banco || !referencia) {
+      showToast("Completá tu banco y el número de referencia de la transferencia");
+      (banco ? el("pagoReferencia") : el("pagoBancoOrigen")).focus();
+      return false;
+    }
+    return `Transferencia desde: ${banco} — Referencia: ${referencia}`;
+  }
+
+  if (metodo === "billetera") {
+    const wallet = el("pagoWallet").value;
+    const dato = el("pagoWalletDato").value.trim();
+    if (!dato) {
+      showToast("Escribí tu número o usuario de la billetera digital");
+      el("pagoWalletDato").focus();
+      return false;
+    }
+    return `Billetera: ${wallet} — Número/usuario: ${dato}`;
+  }
+
+  return ""; // contra entrega: no necesita datos extra
+}
+
+// ---------- Confirmación de compra ----------
+let confirmacionTimer;
+function showConfirmation() {
+  const box = el("pedidoConfirmacion");
+  box.classList.add("show");
+  box.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  clearTimeout(confirmacionTimer);
+  confirmacionTimer = setTimeout(() => box.classList.remove("show"), 8000);
+}
+
+// =========================================================
+// ---------- Reseñas y calificaciones ----------
+// =========================================================
+const SAMPLE_REVIEWS = [
+  { name: "Karla M.", stars: 5, text: "El mix de frutas está buenísimo, siempre fresco y bien picante. ¡Mi favorito!" },
+  { name: "Diego R.", stars: 5, text: "Pedí los Pepinos Locos y llegaron rapidísimo por WhatsApp. Recomendado." },
+  { name: "Fátima S.", stars: 4, text: "Muy rico, solo le pondría un poquito menos de chamoy en el mix." }
+];
+
+let reviews = [...SAMPLE_REVIEWS];
+let selectedStars = 0;
+
+function renderReviews() {
+  const lista = el("resenasLista");
+  lista.innerHTML = reviews.map(r => `
+    <li class="resena-card">
+      <div>
+        <span class="resena-nombre">${r.name}</span>
+        <span class="resena-stars">${"★".repeat(r.stars)}${"☆".repeat(5 - r.stars)}</span>
+      </div>
+      <p class="resena-texto">${r.text}</p>
+    </li>
+  `).join("");
+}
+
+// Estrellas seleccionables (calificación de 1 a 5)
+const starButtons = document.querySelectorAll("#starRating .star");
+starButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    selectedStars = Number(btn.dataset.star);
+    updateStarDisplay();
+  });
+});
+
+function updateStarDisplay() {
+  starButtons.forEach(btn => {
+    btn.classList.toggle("active", Number(btn.dataset.star) <= selectedStars);
+  });
+}
+
+el("enviarResena").addEventListener("click", () => {
+  const nombre = el("resenaNombre").value.trim();
+  const texto = el("resenaTexto").value.trim();
+
+  if (!selectedStars) {
+    showToast("Elegí una calificación con las estrellas ⭐");
+    return;
+  }
+  if (!nombre) {
+    showToast("Escribí tu nombre para dejar la reseña");
+    el("resenaNombre").focus();
+    return;
+  }
+  if (!texto) {
+    showToast("Contanos algo en tu reseña 📝");
+    el("resenaTexto").focus();
+    return;
+  }
+
+  // Mostramos la reseña de inmediato arriba de la lista
+  reviews.unshift({ name: nombre, stars: selectedStars, text: texto });
+  renderReviews();
+
+  // También la enviamos por WhatsApp para que le llegue al negocio
+  const mensaje = `Hola Spacy Fruit Zone 🐾⭐\nSoy ${nombre} y quiero dejar mi reseña:\n\nCalificación: ${"★".repeat(selectedStars)} (${selectedStars}/5)\n"${texto}"`;
+  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`;
+  window.open(url, "_blank");
+
+  showToast("¡Gracias por tu reseña! 🌶️");
+
+  el("resenaNombre").value = "";
+  el("resenaTexto").value = "";
+  selectedStars = 0;
+  updateStarDisplay();
 });
 
 // ---------- Toast ----------
@@ -668,16 +827,18 @@ function observeReveal(node, delay = 0) {
 
 function setupScrollReveal() {
   document.querySelectorAll(
-    ".section-head, .nosotros-teaser-inner, .pedido-box, .footer-inner"
+    ".section-head, .nosotros-teaser-inner, .pedido-box, .footer-inner, .resena-form-card"
   ).forEach(node => observeReveal(node));
 
   document.querySelectorAll(".red-card").forEach((node, i) => observeReveal(node, i * 90));
+  document.querySelectorAll(".resena-card").forEach((node, i) => observeReveal(node, i * 90));
 }
 
 // ---------- Inicio ----------
 el("year").textContent = new Date().getFullYear();
 renderProducts();
 renderCart();
+renderReviews();
 setupScrollReveal();
 
 // Aplicamos el movimiento de letras al nombre de la marca y a "picante" del hero

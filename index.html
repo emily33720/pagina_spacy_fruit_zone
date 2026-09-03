@@ -42,6 +42,7 @@
       <li><a href="#" data-window="nosotros">🐾 Nosotros</a></li>
       <li><a href="#" data-window="info">✨ Qué ofrecemos</a></li>
       <li><a href="#pedido">🛒 Pedido</a></li>
+      <li><a href="#resenas">⭐ Reseñas</a></li>
       <li><a href="#redes">📱 Redes</a></li>
       <li><a href="#" data-window="contacto">📍 Contacto</a></li>
     </ul>
@@ -209,9 +210,107 @@
       <textarea id="clienteNotas" placeholder="Ej: sin chamoy, extra picante..."></textarea>
     </form>
 
+    <div class="pago-block">
+      <p class="pago-label">💳 Método de pago</p>
+      <div class="pago-options" id="pagoOptions">
+        <label class="pago-opt">
+          <input type="radio" name="metodoPago" value="tarjeta" checked>
+          <span>💳 Tarjeta</span>
+        </label>
+        <label class="pago-opt">
+          <input type="radio" name="metodoPago" value="transferencia">
+          <span>🏦 Transferencia</span>
+        </label>
+        <label class="pago-opt">
+          <input type="radio" name="metodoPago" value="billetera">
+          <span>📱 Billetera digital</span>
+        </label>
+        <label class="pago-opt">
+          <input type="radio" name="metodoPago" value="contraentrega">
+          <span>📦 Contra entrega</span>
+        </label>
+      </div>
+
+      <div class="pago-detalle" id="pagoDetalle-tarjeta">
+        <p class="pago-nota">🔒 Por tu seguridad, no pedimos el número completo de tarjeta ni el código de seguridad por este medio. El cobro se hace con datáfono al momento de la entrega o recogida.</p>
+        <label for="pagoTitular">Nombre del titular de la tarjeta</label>
+        <input type="text" id="pagoTitular" placeholder="Como aparece en la tarjeta">
+        <label for="pagoTipoTarjeta">Tipo de tarjeta</label>
+        <select id="pagoTipoTarjeta">
+          <option value="Crédito">Crédito</option>
+          <option value="Débito">Débito</option>
+        </select>
+      </div>
+
+      <div class="pago-detalle" id="pagoDetalle-transferencia" hidden>
+        <p class="pago-nota">🏦 Transferí el total a nuestra cuenta y compartinos el comprobante:<br><strong>Banco Agrícola — Cta. 1234-5678900 — Spacy Fruit Zone</strong></p>
+        <label for="pagoBancoOrigen">Tu banco</label>
+        <input type="text" id="pagoBancoOrigen" placeholder="Ej: Banco Agrícola, Davivienda...">
+        <label for="pagoReferencia">Número de referencia o comprobante</label>
+        <input type="text" id="pagoReferencia" placeholder="Ej: 000123456">
+      </div>
+
+      <div class="pago-detalle" id="pagoDetalle-billetera" hidden>
+        <label for="pagoWallet">¿Cuál billetera usás?</label>
+        <select id="pagoWallet">
+          <option value="Chivo Wallet">Chivo Wallet</option>
+          <option value="Tigo Money">Tigo Money</option>
+          <option value="Otra">Otra</option>
+        </select>
+        <label for="pagoWalletDato">Número o usuario para confirmar el pago</label>
+        <input type="text" id="pagoWalletDato" placeholder="Ej: 7000-0000">
+      </div>
+
+      <div class="pago-detalle" id="pagoDetalle-contraentrega" hidden>
+        <p class="pago-nota">📦 Pagás en efectivo o con datáfono directamente al recibir tu pedido.</p>
+      </div>
+    </div>
+
     <button class="btn btn-whatsapp" id="enviarWhatsapp">
       📲 Enviar pedido por WhatsApp
     </button>
+
+    <div class="pedido-confirmacion" id="pedidoConfirmacion">
+      <span class="confirmacion-icon">✅</span>
+      <p class="confirmacion-title">¡Pedido enviado!</p>
+      <p class="confirmacion-text">Te confirmamos por WhatsApp en unos minutos. ¡Gracias por elegirnos! 🌶️</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== RESEÑAS ===== -->
+<section class="resenas" id="resenas">
+  <div class="fruit-buddy fruit-buddy--sway fruit-buddy--hide-mobile" style="top:4%; right:3%; font-size:2rem; animation-delay:.5s;" aria-hidden="true">⭐</div>
+  <div class="fruit-buddy fruit-buddy--pulse" style="bottom:0%; left:1%; font-size:1.8rem; animation-delay:1s;" aria-hidden="true">🍓</div>
+  <div class="section-head">
+    <p class="eyebrow">Opiniones</p>
+    <h2>⭐ Calificanos y dejá tu reseña</h2>
+    <p class="section-desc">Contanos cómo estuvo tu pedido, nos ayuda un montón y le sirve a otros clientes.</p>
+  </div>
+
+  <div class="resenas-grid">
+    <div class="resena-form-card">
+      <p class="resena-form-label">Tu calificación</p>
+      <div class="star-rating" id="starRating">
+        <button type="button" class="star" data-star="1" aria-label="1 estrella">★</button>
+        <button type="button" class="star" data-star="2" aria-label="2 estrellas">★</button>
+        <button type="button" class="star" data-star="3" aria-label="3 estrellas">★</button>
+        <button type="button" class="star" data-star="4" aria-label="4 estrellas">★</button>
+        <button type="button" class="star" data-star="5" aria-label="5 estrellas">★</button>
+      </div>
+
+      <label for="resenaNombre">Tu nombre</label>
+      <input type="text" id="resenaNombre" placeholder="Nombre">
+
+      <label for="resenaTexto">Tu reseña</label>
+      <textarea id="resenaTexto" placeholder="Contanos qué te pareció..."></textarea>
+
+      <button class="btn btn-primary resena-enviar" id="enviarResena">Enviar reseña 📩</button>
+    </div>
+
+    <ul class="resenas-lista" id="resenasLista">
+      <!-- Las reseñas se generan con script.js -->
+    </ul>
   </div>
 </section>
 </main>
