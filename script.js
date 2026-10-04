@@ -110,7 +110,7 @@ const PRODUCTS = [
     id: "pepinos-locos",
     name: "Pepinos Locos",
     category: "picantes",
-    price: 1.50,
+    price: 1.75,
     img: "img/pepinos-locos.jpg",
     badge: "Picante",
     desc: "Pepino con Takis, gomitas, chamoy, Tajín, limón y sal.",
@@ -122,6 +122,25 @@ const PRODUCTS = [
       "Sumamos gomitas encima.",
       "Bañamos con chamoy y espolvoreamos Tajín.",
       "Terminamos con limón y sal al gusto."
+    ],
+    flavors: null
+  },
+  {
+    id: "pepino-explosivo",
+    name: "Pepino Explosivo",
+    category: "picantes",
+    price: 1.75,
+    img: "img/pepino-explosivo.jpg",
+    badge: "Nuevo",
+    desc: "Pepino fresco picado, acompañado de Takis Jalapeño Chile Limón, elotitos, chamoy y Tajín. Una combinación crujiente, picosita y llena de sabor, perfecta para quienes disfrutan de un antojo dulce, ácido y picante.",
+    fruits: ["Pepino"],
+    ingredients: ["Takis Jalapeño Chile Limón", "Elotitos", "Chamoy", "Tajín"],
+    steps: [
+      "Picamos el pepino fresco en trozos parejos.",
+      "Lo colocamos en el recipiente hasta llenar.",
+      "Agregamos los elotitos y los Takis Jalapeño Chile Limón encima.",
+      "Bañamos con chamoy y espolvoreamos Tajín.",
+      "Servimos al momento para que todo quede bien crujiente."
     ],
     flavors: null
   }
